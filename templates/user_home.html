@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}personal space{% endblock %}
+
+{% block content %}
+
+   <div class="page-content page-container" id="page-content">
+    <div class="padding">
+        <div class="row d-flex justify-content-center">
+            <div class="col-8">
+                <div class="card px-3">
+                    <div class="card-body">
+                        <h1 class="fw-bold text-center mb-4 mt-2" > <span class="text-primary" id="usrnm">{{username.title()}}</span> 's To-Do list</h1>
+                        <form action="{{ url_for('addtodo', username=username)}}" method="POST">
+                            <div class="add-items d-flex">
+                                <input type="text" class="form-control todo-list-input" name="title" placeholder="What do you need to do today?" required>
+                                <button class="add btn btn-primary fw-bold " type="submit">Add</button>
+                            </div>
+                        </form>
+                        <div class="list-wrapper">
+                            <ul class="d-flex flex-column-reverse todo-list">
+
+                            	{% for todo in todos %}
+	                            	{% if todo.status == False %}
+		                                <li id="todo-{{ todo.uid }}" class="btn btn-warning px-2 py-3 my-2 rounded">
+		                                    <div >
+                                                <label class="form-check-label">
+                                                    <input class="checkbox" id="{{ todo.uid }}" onclick="updateTodo({{ todo.uid }})"  type="checkbox">
+                                                    {{ todo.title }}
+                                                    <i class="input-helper"></i>
+                                                </label>
+                                            </div>
+                                            <div id="remove-{{ todo.uid }}" onclick="removeTodo({{ todo.uid }})" class="btn bg-danger mx-1 px-3">
+                                                <i class="fas fa-trash text-white"></i>
+                                            </div>
+		                                </li>
+	                                {% else %}
+
+		                                <li class="completed btn btn-success px-2 py-3 my-2 rounded" id="todo-{{ todo.uid }}">
+		                                    <div>
+                                                <label class="form-check-label">
+                                                    <input class="checkbox" id="{{ todo.uid }}" onclick="updateTodo({{ todo.uid }})"  type="checkbox" checked="">
+                                                    {{ todo.title }}
+                                                    <i class="input-helper"></i>
+                                                </label>
+                                            </div>
+                                            <div id="remove-{{ todo.uid }}" onclick="removeTodo({{ todo.uid }})" class="btn bg-danger mx-1 px-3">
+                                                <i class="fas fa-trash text-white"></i>
+                                            </div>
+		                                </li>
+                                	{% endif %}
+                                {% endfor %}
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script src="{{ url_for('static', filename='jvscrpt.js') }}"></script>
+{% endblock %}
+
+
+
+
