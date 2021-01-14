@@ -1,2 +1,6 @@
 VENV
 VENV/*
+
+.idea
+.idea/*
+
